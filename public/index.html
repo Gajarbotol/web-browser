@@ -18,6 +18,7 @@
             overflow: auto;
             border: 1px solid #0f0;
             background-color: #111;
+            display: none; /* Hide content initially */
         }
         #url {
             width: 80%;
@@ -32,6 +33,12 @@
             color: #0f0;
             border: 1px solid #0f0;
             padding: 5px;
+        }
+        #loading {
+            display: none; /* Hide loading indicator initially */
+            color: #0f0;
+            font-size: 18px;
+            text-align: center;
         }
         #content::-webkit-scrollbar {
             width: 12px;
@@ -49,6 +56,7 @@
 <body>
     <input type="text" id="url" placeholder="Enter URL or search query">
     <button id="go">Go</button>
+    <div id="loading">Loading...</div>
     <div id="content"></div>
 
     <script>
@@ -59,12 +67,18 @@
                     url = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
                 }
 
+                document.getElementById('loading').style.display = 'block'; // Show loading
+                document.getElementById('content').style.display = 'none'; // Hide content
+
                 try {
                     const response = await fetch(`/fetch?url=${encodeURIComponent(url)}`);
                     const data = await response.text();
                     document.getElementById('content').innerHTML = data;
+                    document.getElementById('content').style.display = 'block'; // Show content
                 } catch (error) {
                     document.getElementById('content').innerHTML = 'Error loading the page.';
+                } finally {
+                    document.getElementById('loading').style.display = 'none'; // Hide loading
                 }
             }
         });
