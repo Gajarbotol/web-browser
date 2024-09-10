@@ -1,5 +1,5 @@
 const express = require('express');
-const axios = require('axios');
+const puppeteer = require('puppeteer');
 const path = require('path');
 
 const app = express();
@@ -17,8 +17,12 @@ app.get('/fetch', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(url);
-    res.send(response.data);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle0' });
+    const content = await page.content();
+    await browser.close();
+    res.send(content);
   } catch (error) {
     res.status(500).send('Error fetching the URL');
   }
