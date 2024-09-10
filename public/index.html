@@ -56,7 +56,6 @@
             let url = document.getElementById('url').value;
             if (url) {
                 if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    // Assume it's a search query
                     url = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
                 }
 
