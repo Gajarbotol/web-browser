@@ -72,11 +72,15 @@
 
                 try {
                     const response = await fetch(`/fetch?url=${encodeURIComponent(url)}`);
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
                     const data = await response.text();
                     document.getElementById('content').innerHTML = data;
                     document.getElementById('content').style.display = 'block'; // Show content
                 } catch (error) {
                     document.getElementById('content').innerHTML = 'Error loading the page.';
+                    console.error('Fetch error:', error);
                 } finally {
                     document.getElementById('loading').style.display = 'none'; // Hide loading
                 }
