@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "express": "^4.18.1",
-    "puppeteer": "^19.5.0" // Add Puppeteer as a dependency
+    "puppeteer": "^19.5.0" 
   },
   "engines": {
     "node": "14.x"
